@@ -1,5 +1,4 @@
-const express = require("express");
-const app = express();
+////// not an actual database
 
 let products = [
     {
@@ -17,11 +16,11 @@ let products = [
 ]
 
 
-app.get("/products", (req,res)=>{
-    res.json(products);
-})
+const getAllProducts = (req,res)=>{
+    return res.json(products);
+}
 
-app.put("/products", (req,res)=>{
+const addProduct = (req,res)=>{
     products.push({
         id: 4,
         title: "shirt",
@@ -29,14 +28,13 @@ app.put("/products", (req,res)=>{
         available: true
     })
     res.json(products)
-})
-
-app.get("/products/:id", (req,res)=>{
+}
+const getSpecificProduct = (req,res)=>{
     const product = products.find((product)=> product.id == req.params.id)
     res.json(product)
-})
+}
 
-app.post("/products/:id", (req,res)=>{
+const updateProduct = (req,res)=>{
     const newproducts = products.map((product)=>{
         if(product.id == req.params.id){
             return {...product, available: false}
@@ -45,14 +43,14 @@ app.post("/products/:id", (req,res)=>{
         }
     })
     products = newproducts;
-    res.json(newproducts)
-})
+    res.json(products)
+}
 
-app.delete("/products/:id", (req,res)=>{
+const deleteProduct = (req,res)=>{
     const newproducts = products.filter((product)=> product.id != req.params.id)
     products = newproducts;
-    res.json(newproducts)
-})
+    res.json(products)
+}
 
 
-app.listen(3000, ()=> {console.log(`server strated on port 3000`)})
+module.exports = {getAllProducts, addProduct, getSpecificProduct, updateProduct, deleteProduct};
