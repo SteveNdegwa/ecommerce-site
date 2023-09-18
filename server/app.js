@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 
-const products = [
+let products = [
     {
         id: 1,
         title: "book",
@@ -26,7 +26,7 @@ app.put("/products", (req,res)=>{
         id: 4,
         title: "shirt",
         description: "blue",
-        available: true,
+        available: true
     })
     res.json(products)
 })
@@ -37,20 +37,21 @@ app.get("/products/:id", (req,res)=>{
 })
 
 app.post("/products/:id", (req,res)=>{
-    products = products.map((product)=>{
+    const newproducts = products.map((product)=>{
         if(product.id == req.params.id){
             return {...product, available: false}
         }else{
             return product;
         }
     })
-    res.json(products)
-
+    products = newproducts;
+    res.json(newproducts)
 })
 
 app.delete("/products/:id", (req,res)=>{
-    products = products.filter((product)=>{ product.id != req.params.id})
-    res.json(products)
+    const newproducts = products.filter((product)=> product.id != req.params.id)
+    products = newproducts;
+    res.json(newproducts)
 })
 
 
