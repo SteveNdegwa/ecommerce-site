@@ -24,8 +24,9 @@ app.get("/products", (req,res)=>{
 app.put("/products", (req,res)=>{
     products.push({
         id: 4,
-        title: "",
-        description: req.params.description
+        title: "shirt",
+        description: "blue",
+        available: true,
     })
     res.json(products)
 })
