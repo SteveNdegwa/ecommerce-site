@@ -15,7 +15,7 @@ let products = [
   },
 ];
 
-class ProductsDatabase {
+class Database {
   static actions() {
     return {
       get: () => {
@@ -63,4 +63,4 @@ class ProductsDatabase {
   }
 }
 
-module.exports = ProductsDatabase;
+module.exports = Database;

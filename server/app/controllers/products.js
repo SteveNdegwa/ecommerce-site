@@ -1,26 +1,26 @@
-const ProductsDatabase = require("../models/database")
+const Database = require("../models/database")
 
-class Events{
+class Products{
     static getAllProducts  = (req,res)=>{
-        const results = ProductsDatabase.actions().get().all()
+        const results = Database.actions().get().all()
         return res.json(results);
     }
     static getSpecificProduct  = (req,res)=>{
-        const result = ProductsDatabase.actions().get().specific(req.params.id)
+        const result = Database.actions().get().specific(req.params.id)
         return res.json(result);
     }
     static addProduct = (req,res)=>{
-        const results = ProductsDatabase.actions().add()
+        const results = Database.actions().add()
         return res.json(results);
     }
     static updateProduct  = (req,res)=>{
-        const results = ProductsDatabase.actions().update(req.params.id)
+        const results = Database.actions().update(req.params.id)
         return res.json(results);
     }
     static deleteProduct  = (req,res)=>{
-        const results = ProductsDatabase.actions().delete(req.params.id)
+        const results = Database.actions().delete(req.params.id)
         return res.json(results);
     }
 }
 
-module.exports = Events;
+module.exports = Products;
