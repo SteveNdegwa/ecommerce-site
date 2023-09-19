@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const ProductsDatabase = require("../models/database");
+const Events = require("../controllers/products")
 
-router.get("/", ProductsDatabase.getAllProducts);
-router.put("/", ProductsDatabase.addProduct);
-router.get("/:id", ProductsDatabase.getSpecificProduct);
-router.post("/:id", ProductsDatabase.updateProduct);
-router.delete("/:id", ProductsDatabase.deleteProduct);
+router.get("/", Events.getAllProducts);
+router.put("/", Events.addProduct);
+router.get("/:id", Events.getSpecificProduct);
+router.post("/:id", Events.updateProduct);
+router.delete("/:id", Events.deleteProduct);
 
 
 module.exports = router;

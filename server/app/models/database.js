@@ -1,59 +1,66 @@
 ////// not an actual database
 
 let products = [
-    {
-        id: 1,
-        title: "book",
-        description: "green",
-        available: true
-    },
-    {
-        id: 2,
-        title: "pen",
-        description: "red",
-        available: true
-    }
-]
+  {
+    id: 1,
+    title: "book",
+    description: "green",
+    available: true,
+  },
+  {
+    id: 2,
+    title: "pen",
+    description: "red",
+    available: true,
+  },
+];
 
-class ProductsDatabase{
+class ProductsDatabase {
+  static actions() {
+    return {
+      get: () => {
+        return {
+          all: () => {
+            return products;
+          },
+          specific: (id) => {
+            const product = products.find((product) => product.id == id);
+            return product;
+          },
+        };
+      },
 
-    static getAllProducts = (req,res)=>{
-        return res.json(products);
-    }
-    
-    static addProduct = (req,res)=>{
+      add: () => {
         products.push({
-            id: 4,
-            title: "shirt",
-            description: "blue",
-            available: true
-        })
-        res.json(products)
-    }
+          id: 4,
+          title: "shirt",
+          description: "blue",
+          available: true,
+        });
+        return products;
+      },
 
-    static getSpecificProduct = (req,res)=>{
-        const product = products.find((product)=> product.id == req.params.id)
-        res.json(product)
-    }
-    
-    static updateProduct = (req,res)=>{
-        const newproducts = products.map((product)=>{
-            if(product.id == req.params.id){
-                return {...product, available: false}
-            }else{
-                return product;
-            }
-        })
+      update: (id) => {
+        const newproducts = products.map((product) => {
+          if (product.id == id) {
+            return { ...product, available: false };
+          } else {
+            return product;
+          }
+        });
         products = newproducts;
-        res.json(products)
-    }
-    
-    static deleteProduct = (req,res)=>{
-        const newproducts = products.filter((product)=> product.id != req.params.id)
+        return products;
+      },
+
+      delete: (id) => {
+        const newproducts = products.filter(
+          (product) => product.id != id
+        );
         products = newproducts;
-        res.json(products)
-    }
+        return products;
+      },
+    };
+  }
 }
-
 
 module.exports = ProductsDatabase;
