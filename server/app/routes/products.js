@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const {getAllProducts, addProduct, getSpecificProduct, updateProduct, deleteProduct} = require("../models/database");
+const ProductsDatabase = require("../models/database");
 
-router.get("/", getAllProducts);
-router.put("/", addProduct);
-router.get("/:id", getSpecificProduct);
-router.post("/:id", updateProduct);
-router.delete("/:id", deleteProduct);
+router.get("/", ProductsDatabase.getAllProducts);
+router.put("/", ProductsDatabase.addProduct);
+router.get("/:id", ProductsDatabase.getSpecificProduct);
+router.post("/:id", ProductsDatabase.updateProduct);
+router.delete("/:id", ProductsDatabase.deleteProduct);
 
 
 module.exports = router;
