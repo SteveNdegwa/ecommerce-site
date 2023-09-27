@@ -1,26 +1,28 @@
-const Database = require("../models/database")
+const Database = require("../services/database-service")
+const productModel = require("../models/product-model")
 
-class Products{
-    static getAllProducts  = (req,res)=>{
-        const results = Database.actions().get().all()
+class ProductsController{
+    static getAllProducts  = async(req,res)=>{
+        const results = await Database.Products().find().all()
         return res.json(results);
     }
-    static getSpecificProduct  = (req,res)=>{
-        const result = Database.actions().get().specific(req.params.id)
+    static getSpecificProduct  = async(req,res)=>{
+        const result = await Database.Products().find().where("id", req.params.id)
         return res.json(result);
     }
-    static addProduct = (req,res)=>{
-        const results = Database.actions().add()
+    static addProduct = async(req,res)=>{
+        const product = new productModel(); /// values
+        const results = await Database.Products().add(product.columns, product.values)
         return res.json(results);
     }
-    static updateProduct  = (req,res)=>{
-        const results = Database.actions().update(req.params.id)
+    static updateProduct  = async(req,res)=>{
+        const results = await Database.Products().update("name", "newName", "id", req.params.id)
         return res.json(results);
     }
-    static deleteProduct  = (req,res)=>{
-        const results = Database.actions().delete(req.params.id)
+    static deleteProduct  = async(req,res)=>{
+        const results = await Database.Products().remove("id", req.params.id)
         return res.json(results);
     }
 }
 
-module.exports = Products;
+module.exports = ProductsController;
