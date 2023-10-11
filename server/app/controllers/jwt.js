@@ -8,7 +8,7 @@ const jwtSecretKey = process.env.JWT_SECRET_KEY;
 async function authenticate (req, res, next){
   const result = await UserModel.getUser(req.body.credential);
   const user = JSON.parse(JSON.stringify(result[0]));
-  if (!user) return res.json("user does not exist");
+  if (!user.length) return res.json("user does not exist");
 
   /// hash the entered password
   let password = req.body.password/// hashed

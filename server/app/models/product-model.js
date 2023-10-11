@@ -21,13 +21,13 @@ class ProductModel{
         return result;
     }
 
-    static async getProduct(id){
-        const result = await Database.query(`SELECT * FROM products WHERE product_id = '${id}' OR name = '${id}'`);
+    static async getProduct(credential){
+        const result = await Database.query(`SELECT * FROM products WHERE product_id = '${credential}' OR name = '${credential}'`);
         return result;
     }
     
     static async getSearchProducts(searchValue){
-        const result = await Database.query(`SELECT * FROM products WHERE name LIKE '${searchValue}' OR description LIKE '${searchValue}'`);
+        const result = await Database.query(`SELECT * FROM products WHERE name LIKE '%${searchValue}%' OR description LIKE '%${searchValue}%'`);
         return result;
     }
 
