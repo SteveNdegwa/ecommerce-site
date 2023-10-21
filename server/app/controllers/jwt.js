@@ -7,8 +7,8 @@ const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 async function authenticate (req, res, next){
   const result = await UserModel.getUser(req.body.credential);
+  if(!result.length) return res.json("incorrect username or passowrd");
   const user = JSON.parse(JSON.stringify(result[0]));
-  if (!user.length) return res.json("user does not exist");
 
   /// hash the entered password
   let password = req.body.password/// hashed
@@ -18,8 +18,7 @@ async function authenticate (req, res, next){
   res.cookie("token", token, {
     httpOnly: true,
   });
-  // redirect to homepage
-  return res.json("homepage")
+  return res.json("success")
 
 };
 
@@ -30,8 +29,7 @@ function authorize(req, res, next){
         next();
     } catch (error) {
         res.clearCookie("token");
-        // redirect to login page
-        return res.json("login")
+        return res.redirect("http://localhost:5173/login")
     }
 }
 
