@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { authorize } = require("../controllers/jwt");
-const ProductsController = require("../controllers/products")
+const ProductsController = require("../controllers/ProductsController")
 
 router.use(authorize);
 
