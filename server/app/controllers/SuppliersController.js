@@ -1,4 +1,4 @@
-const SupplierModel = require("../models/supplier-model");
+const SupplierModel = require("../models/SupplierModel");
 
 class SuppliersController{
     static async getAllSuppliers(req, res, next){
@@ -16,13 +16,13 @@ class SuppliersController{
         if(supplier.length) return res.json("The supplier already exists")
 
         const Supplier = new SupplierModel(req.body.name);
-        const result = Supplier.addSupplier();
+        const result = await Supplier.addSupplier();
         return res.json(result);
     } 
 
     static async updateSupplier(req, res, next){
         const Supplier = new SupplierModel(req.body.name);
-        const result = Supplier.updateSupplier(req.params.id);
+        const result = await Supplier.updateSupplier(req.params.id);
         return res.json(result);
     }
     
