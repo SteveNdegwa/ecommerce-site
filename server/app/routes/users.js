@@ -1,14 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { authorize } = require("../controllers/jwt");
+const TokenController = require("../controllers/JwtController");
 const UsersController = require("../controllers/UsersController");
 
-router.use(authorize);
-
-router.get("/", UsersController.getAllUsers)
-router.get("/:credential", UsersController.getUser)
-router.post("/", UsersController.addUser)
-router.put("/:id", UsersController.updateUser)
-router.delete("/:id", UsersController.deleteUser)
+router.get("/", TokenController.verifyToken, UsersController.getAllUsers);
+router.get("/:credential", TokenController.verifyToken, UsersController.getUser);
+router.post("/", UsersController.addUser);
+router.put("/:id", TokenController.verifyToken, UsersController.updateUser);
+router.delete("/:id", TokenController.verifyToken, UsersController.deleteUser);
 
 module.exports = router;
