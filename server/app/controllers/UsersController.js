@@ -13,10 +13,10 @@ class UsersController {
 
   static async addUser(req, res, next) {
     const email = await UserModel.getUser(req.body.email);
-    if (email.length) return res.json("The email already exists");
+    if (email.length) return res.status(200).json("The email already exists");
 
     const username = await UserModel.getUser(req.body.username);
-    if (username.length) return res.json("The username is already taken");
+    if (username.length) return res.status(200).json("The username is already taken");
 
     const User = new UserModel(
       req.body.username,
@@ -24,7 +24,7 @@ class UsersController {
       req.body.password
     );
     const result = await User.addUser();
-    return res.json(result);
+    return res.status(201).json(result);
   }
 
   static async updateUser(req, res, next) {
