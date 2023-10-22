@@ -1,9 +1,9 @@
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import api from "../config/api";
 
 interface FormData {
   credential: string;
@@ -11,7 +11,7 @@ interface FormData {
 }
 
 export function Login() {
-  const [error, setError] = useState("")
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -28,17 +28,22 @@ export function Login() {
     resolver: yupResolver(schema),
   });
 
-  async function onSubmitForm(data: FormData) {
+  function onSubmitForm(data: FormData) {
     setError("");
-    await axios
-      .post("http://localhost:3000/login", data)
+    api
+      .post("/jwt/get-token", data)
       .then((response) => {
-        if (response.data === "authenticated") {
+        console.log(response);
+
+        if (response.status === 201) {
+          localStorage.setItem("username", response.data.username);
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("refreshToken", response.data.refreshToken);
           return navigate("/");
         }
-        setError(response.data)
+        return setError(response.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => setError("Error occurred"));
   }
 
   return (
