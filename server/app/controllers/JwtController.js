@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const randtoken = require("rand-token")
+const randtoken = require("rand-token");
 const UserModel = require("../models/UserModel");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -11,55 +11,65 @@ const refreshTokens = {};
 class JwtController{
   static async getToken(req, res, next) {
     const result = await UserModel.getUser(req.body.credential);
-    if (!result.length) return res.status(200).json("incorrect username or passowrd");
+    if (!result.length) return res.status(200).json("Incorrect username or passowrd");
     const user = JSON.parse(JSON.stringify(result[0]));
   
     /// hash the entered password
     let password = req.body.password; /// hashed
     if (user.password !== password)
-      return res.status(200).json("incorrect username or password");
+      return res.status(200).json("Incorrect username or password");
   
     delete user.password;
-    const token = jwt.sign(user, jwtSecretKey, { expiresIn: "1h" });
+    const accessToken = jwt.sign(user, jwtSecretKey, { expiresIn: "1h" });
   
     const refreshToken = randtoken.uid(256);
     refreshTokens[refreshToken] = user.username;
-    res.status(201).json({username:user.username, token:token, refreshToken: refreshToken});
 
-    console.log(refreshTokens);
+    res.cookie("accessToken", accessToken, {httpOnly: true});
+    res.cookie("refreshToken", refreshToken, {maxAge: 1000*60*60*24 ,httpOnly: true})
+    res.status(201).json({username: user.username});
     next();
   }
   
   
   static async verifyToken(req, res, next) {
-    if(req.headers.authorization){
+    if(req.cookies["accessToken"]){
       try {
-        const token = (req.headers.authorization).replace("Bearer ", "");
-        console.log("token",token);
-        const user = jwt.verify(token, jwtSecretKey);
+        const accessToken = req.cookies["accessToken"];
+        const user = jwt.verify(accessToken, jwtSecretKey);
         req.user = user;
-        console.log("verified");
         return next();
       } catch (error) {
-        return res.status(401).json("invalid access token");
+        return res.status(401).json("Invalid access token");
       }
     };
-    return res.status(401).json("no access token");
+    return res.status(401).json("No access token");
   }
   
   static async refreshToken(req,res,next){
-    const refreshToken = req.body.refreshToken;
+    const refreshToken = req.cookies["refreshToken"];
     const username = req.body.username;
   
     if(refreshToken in refreshTokens && refreshTokens[refreshToken] === username){
       const result = await UserModel.getUser(username);
       const user = JSON.parse(JSON.stringify(result[0]));
       delete user.password;
-      const token = jwt.sign(user, jwtSecretKey, { expiresIn: "1h" });
-      return res.status(200).json({token:token});
+
+      // create a new access token and a new refresh token
+      const accessToken = jwt.sign(user, jwtSecretKey, { expiresIn: "1h" });
+
+      delete refreshTokens.refreshToken;
+      const refreshToken = randtoken.uid(256);
+      refreshTokens[refreshToken] = user.username;
+
+      /// save access and refresh tokens in cookies
+      res.cookie("accessToken", accessToken, {httpOnly: true});
+      res.cookie("refreshToken", refreshToken, {maxAge: 1000*60*60*24, httpOnly: true})
+
+      return res.status(201).json("Successful access token refresh");
     }
 
-    return res.status(401).json("Invalid refresh token");
+    return res.status(401).json("Invalid access token refresh");
   }
 }
 
