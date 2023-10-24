@@ -52,7 +52,7 @@ export function CreateAccount() {
         if (response.status === 201) return navigate("/login");
         return setError(response.data);
       })
-      .catch((err) => setError("An Error Occurred"));
+      .catch((err) => setError(`Error occurred: ${err.response?.status}`));
   }
 
   return (
