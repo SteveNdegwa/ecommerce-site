@@ -33,17 +33,14 @@ export function Login() {
     api
       .post("/jwt/get-token", data)
       .then((response) => {
-        console.log(response);
 
         if (response.status === 201) {
           localStorage.setItem("username", response.data.username);
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("refreshToken", response.data.refreshToken);
           return navigate("/");
         }
         return setError(response.data);
       })
-      .catch((err) => setError("Error occurred"));
+      .catch((err) => setError(`Error occurred: ${err.response?.status}`));
   }
 
   return (
