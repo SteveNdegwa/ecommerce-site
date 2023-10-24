@@ -23,10 +23,10 @@ class JwtController{
     const accessToken = jwt.sign(user, jwtSecretKey, { expiresIn: "1h" });
   
     const refreshToken = randtoken.uid(256);
-    refreshTokens[refreshToken] = user.username;
+    refreshTokens[user.username] = refreshToken;
 
     res.cookie("accessToken", accessToken, {httpOnly: true});
-    res.cookie("refreshToken", refreshToken, {maxAge: 1000*60*60*24 ,httpOnly: true})
+    res.cookie("refreshToken", refreshToken, {maxAge: 1000*60*60*24, httpOnly: true})
     res.status(201).json({username: user.username});
     next();
   }
@@ -50,7 +50,7 @@ class JwtController{
     const refreshToken = req.cookies["refreshToken"];
     const username = req.body.username;
   
-    if(refreshToken in refreshTokens && refreshTokens[refreshToken] === username){
+    if(username in refreshTokens && refreshTokens[username] === refreshToken){
       const result = await UserModel.getUser(username);
       const user = JSON.parse(JSON.stringify(result[0]));
       delete user.password;
@@ -58,9 +58,9 @@ class JwtController{
       // create a new access token and a new refresh token
       const accessToken = jwt.sign(user, jwtSecretKey, { expiresIn: "1h" });
 
-      delete refreshTokens.refreshToken;
+      refreshTokens[username] = undefined;
       const refreshToken = randtoken.uid(256);
-      refreshTokens[refreshToken] = user.username;
+      refreshTokens[username] = refreshToken;
 
       /// save access and refresh tokens in cookies
       res.cookie("accessToken", accessToken, {httpOnly: true});
