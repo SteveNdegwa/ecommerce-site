@@ -28,13 +28,19 @@ class UsersController {
   }
 
   static async updateUser(req, res, next) {
+    const email = await UserModel.getOtherUser(req.body.email, req.user.user_id);
+    if (email.length) return res.status(200).json("The email already exists");
+
+    const username = await UserModel.getOtherUser(req.body.username, req.user.user_id);
+    if (username.length) return res.status(200).json("The username is already taken");
+
     const User = new UserModel(
       req.body.username,
       req.body.email,
       req.body.password
     );
     const result = await User.updateUser(req.params.id);
-    return res.json(result);
+    return res.status(201).json(result);
   }
 
   static async deleteUser(req, res, next) {
