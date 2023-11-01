@@ -24,6 +24,13 @@ class UserModel {
     return result;
   }
 
+  static async getOtherUser(credential, id){
+    let result = await Database.query(
+      `SELECT * FROM users WHERE username = '${credential}' OR email = '${credential}' AND WHERE NOT user_id = '${id}'`
+    );
+    return result;
+  }
+
   async addUser() {
     let result = await Database.query(
       `INSERT INTO users(${Object.values(this.columns)}) VALUES('${
