@@ -71,6 +71,18 @@ class JwtController{
 
     return res.status(401).json("Invalid access token refresh");
   }
+
+  static async revokeRefreshToken(req,res,next){
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    refreshTokens[req.user.username] = undefined;
+    return res.status(200).json("Tokens successfully revoked")
+  }
+
+  static async revokeAllRefreshTokens(req,res,next){
+    refreshTokens = {};
+    return res.status(200).json("Refresh tokens successfully revoked")
+  }
 }
 
 module.exports = JwtController;
