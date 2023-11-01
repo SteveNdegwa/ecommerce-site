@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import api from "../config/api";
 
-interface FormData {
+export interface FormData {
   username: string;
   email: string;
   password: string;
