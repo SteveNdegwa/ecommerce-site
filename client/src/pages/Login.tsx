@@ -47,7 +47,7 @@ export function Login() {
     <div className="login">
       <form className="loginForm">
         <input placeholder="Username or email..." {...register("credential")} />
-        <input placeholder="Password..." {...register("password")} />
+        <input type="password" placeholder="Password..." {...register("password")} />
         <p style={{ color: "red" }}>
           {errors.credential?.message || errors.password?.message || error}
         </p>
