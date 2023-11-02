@@ -4,7 +4,7 @@ class UsersController {
   static async getAllUsers(req, res, next) {
     try {
       const result = await UserModel.getAllUsers();
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (error) {
       return res.status(500).json("Server error")
     }
@@ -13,7 +13,7 @@ class UsersController {
   static async getUser(req, res, next) {
     try {
       const result = await UserModel.getUser(req.params.credential);
-      return res.json(result);
+      return res.status(200).json(result);
     } catch (error) {
       return res.status(500).json("Server error")
     }
@@ -53,7 +53,7 @@ class UsersController {
         req.body.email,
         req.body.password
       );
-      const result = await User.updateUser(req.params.id);
+      const result = await User.updateUser(req.user.user_id);
       return res.status(201).json(result);
     } catch (error) {
       return res.status(500).json("Server error")
@@ -63,7 +63,7 @@ class UsersController {
   static async deleteUser(req, res, next) {
    try {
      const result = await UserModel.deleteUser(req.params.id);
-     return res.json(result);
+     return res.status(200).json(result);
    } catch (error) {
     return res.status(500).json("Server error")
    }
