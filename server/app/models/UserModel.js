@@ -26,7 +26,7 @@ class UserModel {
 
   static async getOtherUser(credential, id){
     let result = await Database.query(
-      `SELECT * FROM users WHERE username = '${credential}' OR email = '${credential}' AND WHERE NOT user_id = '${id}'`
+      `SELECT * FROM users WHERE (username = '${credential}' OR email = '${credential}') AND user_id != '${id}'`
     );
     return result;
   }
