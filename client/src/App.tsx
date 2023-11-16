@@ -5,10 +5,13 @@ import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { CreateAccount } from './pages/CreateAccount';
 import { UpdateAccount } from './pages/UpdateAccount';
+import { Provider } from 'react-redux';
+import { store } from './store';
 
 function App() {
   return(
     <div className="app">
+      <Provider store={store}>
       <Router>
         <Navbar/>
         <Routes>
@@ -18,6 +21,7 @@ function App() {
           <Route path='/update-account' element={<UpdateAccount/>}/>
         </Routes>
       </Router>
+      </Provider>
     </div>
   );
 }
