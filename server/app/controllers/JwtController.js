@@ -75,7 +75,7 @@ class JwtController{
   static async revokeUserToken(req,res,next){
     res.clearCookie("accessToken");
     res.clearCookie("refreshToken");
-    refreshTokens[req.params.username] = undefined;
+    if(refreshTokens[req.params.username]){refreshTokens[req.params.username] = undefined};
     return res.status(200).json("Tokens successfully revoked");
   }
 
