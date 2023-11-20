@@ -30,7 +30,8 @@ class UsersController {
       const User = new UserModel(
         req.body.username,
         req.body.email,
-        req.body.password
+        req.body.password,
+        req.body.role,
       );
       const result = await User.addUser();
       return res.status(201).json(result);
@@ -51,7 +52,8 @@ class UsersController {
       const User = new UserModel(
         req.body.username,
         req.body.email,
-        req.body.password
+        req.body.password,
+        req.body.role
       );
       const result = await User.updateUser(req.user.user_id);
       return res.status(201).json(result);
