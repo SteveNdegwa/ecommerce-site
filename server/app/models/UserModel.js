@@ -1,15 +1,17 @@
 const Database = require("../services/Database");
 
 class UserModel {
-  constructor(username, email, password) {
+  constructor(username, email, password, role) {
     this.columns = {
       username: "username",
       email: "email",
       password: "password",
+      role: "role"
     };
     this.username = username;
     this.email = email;
     this.password = password;
+    this.role = role;
   }
 
   static async getAllUsers() {
@@ -35,14 +37,14 @@ class UserModel {
     let result = await Database.query(
       `INSERT INTO users(${Object.values(this.columns)}) VALUES('${
         this.username
-      }', '${this.email}', '${this.password}')`
+      }', '${this.email}', '${this.password}', '${this.role}')`
     );
     return result;
   }
 
   async updateUser(id) {
     let result = await Database.query(
-      `UPDATE users SET ${this.columns.username} = '${this.username}', ${this.columns.email} = '${this.email}', ${this.columns.password} = '${this.password}' WHERE user_id  = '${id}'`
+      `UPDATE users SET ${this.columns.username} = '${this.username}', ${this.columns.email} = '${this.email}', ${this.columns.password} = '${this.password}', ${this.columns.role} = '${this.role}' WHERE user_id  = '${id}'`
     );
     return result;
   }
