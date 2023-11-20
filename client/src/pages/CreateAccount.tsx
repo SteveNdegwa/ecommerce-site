@@ -47,7 +47,7 @@ export function CreateAccount() {
   function onFormSubmit(data: FormData) {
     setError("");
     api
-      .post("/users", data)
+      .post("/users", {...data, role: "user"})
       .then((response) => {
         if (response.status === 201) return navigate("/login");
         return setError(response.data);

@@ -1,14 +1,23 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { FormData } from "./CreateAccount";
+import * as yup from "yup";
 import api from "../config/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+export interface UserData {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role: string;
+}
+
+
 export function UpdateAccount() {
   const [error, setError] = useState("");
-  const [userDetails, setUserDetails] = useState<FormData | null>(null);
+  const [userDetails, setUserDetails] = useState<UserData | null>(null);
 
   const schema = yup.object().shape({
     username: yup
@@ -43,12 +52,13 @@ export function UpdateAccount() {
     api
       .get(`/users/${username}`)
       .then((response) => {
-        const { username, email, password } = response.data[0];
+        const { username, email, password, role } = response.data[0];
         setUserDetails({
           username: username,
           email: email,
           password: password,
           confirmPassword: password,
+          role: role
         });
 
         reset({
@@ -72,7 +82,7 @@ export function UpdateAccount() {
     )
       return setError("No changes made");
     await api
-      .put("/users", data)
+      .put("/users", {...data, role: userDetails?.role})
       .then((response) => {
         if (response.status === 201) return navigate("/login");
         return setError(response.data);
