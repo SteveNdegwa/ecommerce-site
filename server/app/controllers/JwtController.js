@@ -92,8 +92,10 @@ class JwtController {
   }
 
   static async revokeAllRefreshTokens(req, res, next) {
-    refreshTokens = {};
-    return res.status(200).json("Refresh tokens successfully revoked");
+    if (req.user.role === "admin") {
+      refreshTokens = {};
+      return res.status(200).json("Refresh tokens successfully revoked");
+    }
   }
 }
 
