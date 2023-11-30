@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../config/api";
 import { useDispatch } from "react-redux"
-import { login, logout } from "../store";
+import { login } from "../store";
 
 interface FormData {
   credential: string;
@@ -18,7 +18,6 @@ export function Login() {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
-  dispatch(logout());
   
   const schema = yup.object().shape({
     credential: yup.string().required("Please enter your username or email"),
@@ -39,7 +38,7 @@ export function Login() {
       .post("/jwt/get-token", data)
       .then((response) => {
         if (response.status === 201) {
-          dispatch(login({username: response.data.username}));
+          dispatch(login({username: response.data.username, role: response.data.role}));
           return navigate("/");
         }
         return setError(response.data);
