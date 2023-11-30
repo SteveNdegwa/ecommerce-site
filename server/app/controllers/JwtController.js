@@ -30,7 +30,7 @@ class JwtController {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
     });
-    res.status(201).json({ username: user.username });
+    res.status(201).json({ username: user.username, role: user.role });
     next();
   }
 
