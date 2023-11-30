@@ -1,6 +1,7 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import { Navbar } from './components/Navbar';
+import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { CreateAccount } from './pages/CreateAccount';
@@ -20,6 +21,7 @@ function App() {
           <Route path='/create-account' element={<CreateAccount/>}/>
           <Route path='/update-account' element={<UpdateAccount/>}/>
         </Routes>
+        <Footer/>
       </Router>
       </Provider>
     </div>
