@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { State } from "../store";
+import { store, State, logout } from "../store";
 
 const api = axios.create({
     withCredentials: true,
@@ -18,7 +18,7 @@ api.interceptors.response.use(
                 await axios.post('http://localhost:3000/jwt/refresh-token', {username}, {withCredentials: true});
                 return axios(originalRequest);
             } catch (err) {
-                // dispatch(logout());
+                store.dispatch(logout()); // access dispatch outside component
                 return window.location.replace("http://localhost:5173/login")
             }
         }
