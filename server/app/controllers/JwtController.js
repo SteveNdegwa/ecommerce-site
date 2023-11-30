@@ -89,6 +89,7 @@ class JwtController {
       }
       return res.status(200).json("Tokens successfully revoked");
     }
+    return res.status(403).json("You are not authorized to perform this action");
   }
 
   static async revokeAllRefreshTokens(req, res, next) {
@@ -96,6 +97,7 @@ class JwtController {
       refreshTokens = {};
       return res.status(200).json("Refresh tokens successfully revoked");
     }
+    return res.status(403).json("You are not authorized to perform this action");
   }
 }
 
