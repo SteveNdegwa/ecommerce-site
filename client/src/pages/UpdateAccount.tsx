@@ -5,6 +5,8 @@ import * as yup from "yup";
 import api from "../config/api";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { State } from "../store";
 
 export interface UserData {
   username: string;
@@ -48,7 +50,7 @@ export function UpdateAccount() {
   });
 
   useEffect(() => {
-    const username = localStorage.getItem("username");
+    const username =  useSelector((state: State)=> state.user.value.username); 
     api
       .get(`/users/${username}`)
       .then((response) => {
