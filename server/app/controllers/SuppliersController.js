@@ -2,8 +2,12 @@ const SupplierModel = require("../models/SupplierModel");
 
 class SuppliersController{
     static async getAllSuppliers(req, res, next){
-        const result  = await SupplierModel.getAllSuppliers();
-        return res.json(result);
+       try {
+         const result  = await SupplierModel.getAllSuppliers();
+         return res.status(200).json(result);
+       } catch (error) {
+        return res.status(500).json("Internal server error")
+       }
     }
 
     static async getSupplier(req, res, next){
