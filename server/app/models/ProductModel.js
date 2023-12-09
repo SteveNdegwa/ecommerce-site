@@ -23,9 +23,16 @@ class ProductModel {
     return result;
   }
 
-  static async getProduct(credential) {
+  static async getProductById(id) {
     const result = await Database.query(
-      `SELECT * FROM products WHERE product_id = '${credential}''`
+      `SELECT * FROM products WHERE product_id = '${id}'`
+    );
+    return result;
+  }
+
+  static async getProductByDescription(category, manufacturer, description) {
+    const result = await Database.query(
+      `SELECT * FROM products WHERE category = '${category}' AND manufacturer = '${manufacturer}' AND description = '${description}'`
     );
     return result;
   }
