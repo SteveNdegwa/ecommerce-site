@@ -8,6 +8,7 @@ import { CreateAccount } from './pages/CreateAccount';
 import { UpdateAccount } from './pages/UpdateAccount';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { AddProduct } from './pages/AddProduct';
 
 function App() {
   return(
@@ -20,6 +21,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/create-account' element={<CreateAccount/>}/>
           <Route path='/update-account' element={<UpdateAccount/>}/>
+          <Route path='/add-product' element = {< AddProduct/>}/>
         </Routes>
         <Footer/>
       </Router>
