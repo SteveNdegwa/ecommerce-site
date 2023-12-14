@@ -31,7 +31,7 @@ class ProductsController {
   }
   static async addProduct(req, res, next) {
     try {
-      if (req.user.role === "admin") {
+      if (req.user?.role === "admin") {
         const product = await ProductModel.getProductByDescription(
           req.body.category,
           req.body.manufacturer,
@@ -48,7 +48,7 @@ class ProductsController {
           price,
           stock,
         } = req.body;
-        
+
         const Product = new ProductModel(
           category,
           manufacturer,
@@ -60,30 +60,47 @@ class ProductsController {
         const results = await Product.addProduct();
         return res.status(201).json(results);
       }
-      return res.status(403).json("Not authorised to perform this");
+      return res.status(403).json("Not authorised to perform this action");
     } catch (error) {
       return res.status(500).json("Internal Server Error");
     }
   }
   static async updateProduct(req, res, next) {
     try {
-      const Product = new ProductModel(
-        req.body.name,
-        req.body.description,
-        req.body.supplierId,
-        req.body.price,
-        req.body.stock
-      );
-      const results = await Product.updateProduct(req.params.id);
-      return res.status(204).json(results);
+      if (req.user?.role === "admin") {
+        const {
+          category,
+          manufacturer,
+          description,
+          supplierId,
+          price,
+          stock,
+        } = req.body;
+
+        const Product = new ProductModel(
+          category,
+          manufacturer,
+          description,
+          supplierId,
+          price,
+          stock
+        );
+        const results = await Product.updateProduct(req.params.id);
+        return res.status(200).json(results);
+      }
+      return res.status(403).json("Not authorised to perform this action");
     } catch (error) {
       return res.status(500).json("Internal Server Error");
     }
   }
   static async deleteProduct(req, res, next) {
     try {
-      const result = await ProductModel.getProduct(req.params.id);
-      return res.status(202).json(result);
+      if (req.user?.role === "admin") {
+        const result = await ProductModel.deleteProduct(req.params.id);
+        return res.status(200).json(result);
+      } else {
+        return res.status(403).json("Not authorised to perform this action");
+      }
     } catch (error) {
       return res.status(500).json("Internal Server Error");
     }
