@@ -31,7 +31,7 @@ export function AddProduct() {
         setSuppliers(response.data);
       })
       .catch((error) => setError(error.response?.data || "Server Error"));
-  });
+  },[]);
 
   const schema = yup.object().shape({
     category: yup.string().required(),
