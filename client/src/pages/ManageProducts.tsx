@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import api from "../config/api";
-import { UpdateProduct } from "./updateProduct";
 import { useNavigate } from "react-router-dom";
 
 interface Product{
