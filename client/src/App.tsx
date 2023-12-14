@@ -9,6 +9,8 @@ import { UpdateAccount } from './pages/UpdateAccount';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { AddProduct } from './pages/AddProduct';
+import { ManageProducts } from './pages/ManageProducts';
+import { UpdateProduct } from './pages/updateProduct';
 
 function App() {
   return(
@@ -22,6 +24,8 @@ function App() {
           <Route path='/create-account' element={<CreateAccount/>}/>
           <Route path='/update-account' element={<UpdateAccount/>}/>
           <Route path='/add-product' element = {< AddProduct/>}/>
+          <Route path='/manage-products' element = {< ManageProducts/>}/>
+          <Route path='/update-product/:productId' element = {< UpdateProduct/>}/>
         </Routes>
         <Footer/>
       </Router>
