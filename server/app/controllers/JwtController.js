@@ -80,7 +80,7 @@ class JwtController {
   static async revokeUserToken(req, res, next) {
     if (
       req.params.username === req.user.username ||
-      req.user.role === "admin"
+      req.user?.role === "admin"
     ) {
       res.clearCookie("accessToken");
       res.clearCookie("refreshToken");
@@ -93,7 +93,7 @@ class JwtController {
   }
 
   static async revokeAllRefreshTokens(req, res, next) {
-    if (req.user.role === "admin") {
+    if (req.user?.role === "admin") {
       refreshTokens = {};
       return res.status(200).json("Refresh tokens successfully revoked");
     }
