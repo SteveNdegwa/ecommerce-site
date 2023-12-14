@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors")
 app.use(cors({
     origin: "http://localhost:5173",
-    methods:['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+    methods:['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD', 'DELETE'],
     credentials: true,
 }))
 
