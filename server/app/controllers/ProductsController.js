@@ -19,6 +19,15 @@ class ProductsController {
     }
   }
 
+  static async getProductBySupplierId(req, res, next) {
+    try {
+      const result = await ProductModel.getProductBySupplierId(req.params.supplierId);
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(500).json("Internal Server Error");
+    }
+  }
+
   static async getSearchProducts(req, res, next) {
     try {
       const result = await ProductModel.getSearchProducts(

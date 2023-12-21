@@ -30,6 +30,13 @@ class ProductModel {
     return result;
   }
 
+  static async getProductBySupplierId(supplierId) {
+    const result = await Database.query(
+      `SELECT * FROM products WHERE supplier_id = '${supplierId}'`
+    );
+    return result;
+  }
+
   static async getProductByDescription(category, manufacturer, description) {
     const result = await Database.query(
       `SELECT * FROM products WHERE category = '${category}' AND manufacturer = '${manufacturer}' AND description = '${description}'`
