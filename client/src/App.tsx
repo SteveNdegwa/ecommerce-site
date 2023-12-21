@@ -10,7 +10,10 @@ import { Provider } from 'react-redux';
 import { store } from './store';
 import { AddProduct } from './pages/AddProduct';
 import { ManageProducts } from './pages/ManageProducts';
-import { UpdateProduct } from './pages/updateProduct';
+import { UpdateProduct } from './pages/UpdateProduct';
+import { AddSupplier } from './pages/AddSupplier';
+import { ManageSuppliers } from './pages/ManageSuppliers';
+import { UpdateSupplier } from './pages/UpdateSupplier';
 
 function App() {
   return(
@@ -26,6 +29,9 @@ function App() {
           <Route path='/add-product' element = {< AddProduct/>}/>
           <Route path='/manage-products' element = {< ManageProducts/>}/>
           <Route path='/update-product/:productId' element = {< UpdateProduct/>}/>
+          <Route path='/add-supplier' element = {< AddSupplier/>}/>
+          <Route path='/manage-suppliers' element = {< ManageSuppliers/>}/>
+          <Route path='/update-supplier/:supplierId' element = {< UpdateSupplier/>}/>
         </Routes>
         <Footer/>
       </Router>
