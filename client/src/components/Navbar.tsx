@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import { State, logout } from "../store";
-import { useDispatch, useSelector } from "react-redux";
+
 import api from "../config/api";
 
 
@@ -8,13 +7,12 @@ export function Navbar(){
   
     const navigate = useNavigate();
 
-    const username = useSelector((state: State)=> state.user.value.username);
+    const username = localStorage.getItem("username") || null;
 
-    const dispatch = useDispatch();
     
     function onLogout(){
         api.post(`/jwt/revoke-user-token/${username}`)
-        dispatch(logout());
+        localStorage.clear();
         navigate("/login");
     }
 

@@ -4,8 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../config/api";
-import { useDispatch } from "react-redux"
-import { login } from "../store";
+
 
 interface FormData {
   credential: string;
@@ -16,8 +15,6 @@ export function Login() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-
-  const dispatch = useDispatch();
   
   const schema = yup.object().shape({
     credential: yup.string().required("Please enter your username or email"),
@@ -38,7 +35,8 @@ export function Login() {
       .post("/jwt/get-token", data)
       .then((response) => {
         if (response.status === 201) {
-          dispatch(login({username: response.data.username, role: response.data.role}));
+          localStorage.setItem("username", response.data.username)
+          localStorage.setItem("role", response.data.role)
           return navigate("/");
         }
         return setError(response.data);
