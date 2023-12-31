@@ -1,29 +1,54 @@
 import {configureStore, createSlice} from "@reduxjs/toolkit"
 
-export interface State{
-    user: {
-        value:{
-        }
-    }
+
+export interface CartProduct{
+    productId: number;
+    productName: string;
+    noOfProducts: number;
+    productPrice: number;
+    productStock: number;
 }
 
-const userSlice = createSlice({
-    name: "user",
-    initialState: {value:{}},
+const cartSlice = createSlice({
+    name: "cart",
+    initialState:[],
     reducers:{
-        login:(state, action)=>{
-            state.value = action.payload
+        addToCart:(state: any, action)=>{
+            state.push(action.payload)
         },
-        logout:(state)=>{
-            state.value = {}
+        removeFromCart:(state, action)=>{
+            state.filter((product:CartProduct) => product.productId !== action.payload)
+            console.log(state); 
+        },
+        clearCart:(state)=>{
+            state = []
+        },
+        increaseProductItems:(state, action)=>{
+            state.map((product:CartProduct)=>{
+                if(product.productId == action.payload){
+                    let newNoOfProducts = product.noOfProducts + 1;
+                    if(newNoOfProducts <= product.productStock) return product.noOfProducts = newNoOfProducts;
+                }
+                return product;
+            })
+        },
+        decreaseProductItems:(state, action)=>{
+            state.map((product:CartProduct)=>{
+                if(product.productId == action.payload){
+                    let newNoOfProducts = product.noOfProducts - 1;
+                    if(newNoOfProducts > 0 ) return product.noOfProducts = newNoOfProducts;
+                }
+                return product;
+            })
         }
+
     }
 })
 
-export const { login, logout } = userSlice.actions;
+export const { addToCart, removeFromCart, clearCart, increaseProductItems, decreaseProductItems } = cartSlice.actions;
 
 export const store = configureStore({
     reducer:{
-        user: userSlice.reducer,
+        cart: cartSlice.reducer,
     },
 })
