@@ -14,6 +14,8 @@ import { UpdateProduct } from './pages/UpdateProduct';
 import { AddSupplier } from './pages/AddSupplier';
 import { ManageSuppliers } from './pages/ManageSuppliers';
 import { UpdateSupplier } from './pages/UpdateSupplier';
+import { ViewProducts } from './pages/ViewProducts';
+import { Cart } from './pages/Cart';
 
 function App() {
   return(
@@ -29,9 +31,13 @@ function App() {
           <Route path='/add-product' element = {< AddProduct/>}/>
           <Route path='/manage-products' element = {< ManageProducts/>}/>
           <Route path='/update-product/:productId' element = {< UpdateProduct/>}/>
+          <Route path='/view-products/:productCategory' element = {< ViewProducts/>}/>
           <Route path='/add-supplier' element = {< AddSupplier/>}/>
           <Route path='/manage-suppliers' element = {< ManageSuppliers/>}/>
           <Route path='/update-supplier/:supplierId' element = {< UpdateSupplier/>}/>
+
+          <Route path='/cart' element = {< Cart/>}/>
+
         </Routes>
         <Footer/>
       </Router>
