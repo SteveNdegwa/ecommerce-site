@@ -8,7 +8,6 @@ export function Navbar(){
     const navigate = useNavigate();
 
     const username = localStorage.getItem("username") || null;
-
     
     function onLogout(){
         api.post(`/jwt/revoke-user-token/${username}`)
@@ -18,14 +17,46 @@ export function Navbar(){
 
     return(
         <nav className="navbar">
-            <div className="links">
-                <Link className="link" to="/">Home</Link>
-                <Link className="link" to="/">Catalog</Link>
-                <Link className="link" to="/">Collections</Link>
-                <Link className="link" to="/">Contact us</Link>
-            </div>
-            <h2 className="username">{username && <>Hi {username}</>}</h2>
-            <button type="button" onClick={onLogout}>{username ? <>Logout</> : <>Login</>}</button>
+            <section className="links">
+                <ul className="menu">
+                    <li className="menuItem">
+                        <Link className="link" to="/">Home</Link>
+                    </li>
+                    <li className="menuItem">
+                        <Link className="link" to="/view-products/all">Products</Link>
+                        <ul className="subMenu">
+                            <li className="subMenuItem">
+                                <Link className="link" to="/view-products/phone">Phones</Link>
+                            </li>
+                            <li className="subMenuItem">
+                                <Link className="link" to="/view-products/watch">Watches</Link>
+                            </li>
+                            <li className="subMenuItem">
+                                <Link className="link" to="/view-products/fridge">Fridges</Link>
+                            </li>
+                            <li className="subMenuItem">
+                                <Link className="link" to="/view-products/microwave">Microwaves</Link>
+                            </li>
+                            <li className="subMenuItem">
+                                <Link className="link" to="/view-products/toaster">Toasters</Link>
+                            </li>
+                        </ul>
+                    </li>
+                    <li className="menuItem">
+                        <Link className="link" to="/">About us</Link>
+                    </li>
+                    <li className="menuItem">
+                        <Link className="link" to="/">Contact us</Link>
+                    </li>
+                    <li className="menuItem">
+                        <Link className="link" to="/cart">Cart</Link>
+                    </li>
+                </ul>
+            </section>
+            <section className="user">
+                <h3 className="message">{username && <>Hi  {username}</>}</h3>
+                <button type="button" style={{backgroundColor: username ? "red" : "green"}} onClick={onLogout}>{username ? <>Logout</> : <>Login</>}</button>
+            </section>
         </nav>
     )
 }
