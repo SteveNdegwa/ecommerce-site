@@ -17,7 +17,7 @@ export function ManageSuppliers() {
       .get("/suppliers")
       .then((response) => setSuppliersList(response.data))
       .catch((error) => setError(error.response.data || "An error occurred"));
-  }, []);
+  });
 
   function updateSupplier(supplierId: string) {
     return navigate(`/update-supplier/${supplierId}`);
