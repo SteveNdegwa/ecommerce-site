@@ -1,0 +1,146 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.app{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+nav, footer, main{
+    width: 100%;
+} 
+
+/* navbar */
+
+.navbar{
+    position: sticky;
+    top: 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: darkslategray;
+    padding: 20px;
+}
+
+.navbar .menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.navbar .menu .menuItem{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100%;
+}
+
+.navbar .menu .menuItem:hover > .subMenu{
+    visibility: visible;
+}
+
+.navbar .menu .menuItem .link{
+    display: block;
+    width: 100%;
+    line-height: 50px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    border: 1px solid transparent;
+}
+
+.navbar .menu .menuItem .link:hover{
+    border-color: white;
+}
+
+.navbar .menu .menuItem .subMenu{
+    visibility: hidden;
+    position: absolute;
+    top: 51px;
+    left: 0px;
+    width: 400px;
+    display: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    padding: 20px;
+    background-color: orange;
+}
+
+.navbar .menu .menuItem .subMenu .subMenuItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100%;
+    border: 1px solid transparent;
+}
+
+.navbar .menu .menuItem .subMenu .subMenuItem .link:hover{
+    border-color: white;
+}
+
+.navbar .user{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.navbar .user button{
+    padding: 10px;
+    color: white;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+.navbar .user .message{
+    color: white;
+}
+
+
+/* footer */
+
+.footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background-color: darkslategray;
+    padding: 30px;
+}
+
+/* home */
+.home .landing{
+    min-height: 100vh;
+}
+
+/* view products */
+.viewProducts{
+    min-height: 90vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+    background-color: ghostwhite;
+}
+
+.viewProducts .product{
+    
+}
