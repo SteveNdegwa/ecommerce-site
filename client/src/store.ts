@@ -14,7 +14,11 @@ const cartSlice = createSlice({
     initialState:[],
     reducers:{
         addToCart:(state: any, action)=>{
-            state.push(action.payload)
+            let productPresent = false;
+            state.map((product: CartProduct)=>{
+                if(product.productId == action.payload.productId) productPresent = true;
+            })
+            productPresent ? alert("The product is already added to the cart") : state.push(action.payload);
         },
         removeFromCart:(state, action)=>{
             state.filter((product:CartProduct) => product.productId !== action.payload)
